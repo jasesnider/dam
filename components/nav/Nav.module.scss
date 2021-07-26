@@ -2,5 +2,8 @@
     ul {
         display: inline-flex;
         list-style-type: none;
+        li {
+            margin-right: 5rem;
+        }
     }
 }

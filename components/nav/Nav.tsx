@@ -1,8 +1,10 @@
 import React from 'react';
+import styles from './Nav.module.scss';
 
-function Nav() {
+
+const Nav: React.FC =() => {
     return (
-    <nav id="nav">
+    <nav id={styles.nav}>
         <ul>
             <li>
                 <a href="/assets">Assets</a>
