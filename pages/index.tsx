@@ -4,21 +4,34 @@ import { Nav, Input } from '../components';
 import { Assets, UploadButton } from '../containers';
 import ImageDetails from '../interfaces/ImageDetails';
 import styles from '../styles/Home.module.scss';
-import { assetsApiPath } from '../constants/api';
-
-function getAssets() {
-  return fetch(assetsApiPath)
-    .then(data => data.json())
-}
+import {getAssets} from '../api/assets';
 
 export default function Home() {
 
   const [inputs, setText] = useState<any>({});
   const [assets, setAssets] = useState<ImageDetails[]>([]);
+  const [filteredAssets, setFilteredAssets] = useState<ImageDetails[]>([]);
 
   useEffect(() => {
-     getAssets().then(a => setAssets(a));
-    }, []);
+     getAssets().then(a => {
+      setAssets(a);
+      setFilteredAssets(a);
+     });
+  }, []);
+
+  useEffect(() => {
+    if(!!inputs && !!inputs?.search__field) {
+      const foundAssets = assets?.filter((asset: ImageDetails) => {
+      const {name, description} = asset;
+      const joinedSearchCriteria = `${name}${description}`;
+        return joinedSearchCriteria.toLowerCase().includes(inputs?.search__field?.toLowerCase());
+      });
+      setFilteredAssets(foundAssets);
+    } else {
+      setFilteredAssets(assets);
+    }
+   
+  }, [inputs]);
 
   const handleInputChange = (
     event:
@@ -52,9 +65,6 @@ export default function Home() {
 
       <main className={styles.main}>
         <Nav />
-        <h1 className={styles.title}>
-          Digital Asset Management System
-        </h1>
         <div className={styles.subnav}>
           <Input
             id="search__text__field"
@@ -69,7 +79,7 @@ export default function Home() {
           />
           <UploadButton onClick={uploadImage} />
         </div>
-        <Assets assets={assets} />      
+        <Assets assets={filteredAssets} />      
       </main>
 
       <footer className={styles.footer}>
