@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { Nav, Input } from '../components';
 import { Assets, UploadButton } from '../containers';
 import ImageDetails from '../interfaces/ImageDetails';
-import classNames from 'classnames';
 import styles from '../styles/Home.module.scss';
 import { assetsApiPath } from '../constants/api';
 
@@ -56,16 +55,20 @@ export default function Home() {
         <h1 className={styles.title}>
           Digital Asset Management System
         </h1>
-        <Input
-          id="search__text__field"
-          label="Search Field"
-          name="search__field"
-          value={inputs["search__field"]}
-          type="text"
-          placeholder="Enter search criteria"
-          onChange={handleInputChange}
-        />
-        <UploadButton onClick={uploadImage} />
+        <div className={styles.subnav}>
+          <Input
+            id="search__text__field"
+            className="search-field"
+            label="Search Field"
+            name="search__field"
+            value={inputs["search__field"]}
+            type="text"
+            placeholder="Enter search criteria"
+            hideLabel={true}
+            onChange={handleInputChange}
+          />
+          <UploadButton onClick={uploadImage} />
+        </div>
         <Assets assets={assets} />      
       </main>
 

@@ -23,6 +23,7 @@ interface IProps {
   ) => void;
   disabled?: boolean;
   readonly?: boolean;
+  hideLabel?: boolean;
 }
 
 const Input: React.FC<IProps> = ({
@@ -41,7 +42,8 @@ const Input: React.FC<IProps> = ({
   className,
   placeholder,
   onChange,
-  disabled
+  disabled,
+  hideLabel
 }) => {
   const context = "__input";
   const classNames = classnames(
@@ -54,7 +56,7 @@ const Input: React.FC<IProps> = ({
 
   return (
     <span className={classNames}>
-      <label htmlFor={id}>{label}</label>
+      <label className={hideLabel ? 'sr-only': ''} htmlFor={id}>{label}</label>
       {type === "textarea" ? (
         <textarea
           id={id}
