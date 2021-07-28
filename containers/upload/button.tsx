@@ -8,11 +8,11 @@ interface IProps {
 const UploadButton: React.FC<IProps>= ({ onClick }) => {
     return (
         <Button
-        id="primary-button"
+        id="upload-button"
         name="simple"
         type="primary"
-        title="Primary button"
-        label="Primary button"
+        title="Upload button"
+        label="Upload"
         onClick={onClick}
   />
     )

@@ -1,0 +1,76 @@
+
+.__input {
+
+    label {
+      box-sizing: border-box;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font-family: inherit;
+      font-size: var(--cds-label-01-font-size,.75rem);
+      font-weight: var(--cds-label-01-font-weight,400);
+      line-height: var(--cds-label-01-line-height,1rem);
+      letter-spacing: var(--cds-label-01-letter-spacing,.32px);
+      color: var(--cds-text-02,#393939);
+      font-weight: 400;
+      display: inline-block;
+      vertical-align: initial;
+      margin: 0 0 .5rem;
+      line-height: 1rem;
+    }
+    
+    input, textarea {
+      box-sizing: border-box;
+      margin-bottom: 1rem;
+      font-size: 100%;
+      font-family: inherit;
+      vertical-align: initial;
+      font-size: var(--cds-body-short-01-font-size,.875rem);
+      font-weight: var(--cds-body-short-01-font-weight,400);
+      line-height: var(--cds-body-short-01-line-height,1.125rem);
+      letter-spacing: var(--cds-body-short-01-letter-spacing,.16px);
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+      background-color: var(--cds-field-01,#f4f4f4);
+      width: 100%;
+      padding: 0 1rem;
+      color: var(--cds-text-01,#161616);
+      border: none;
+      border-bottom: 1px solid var(--cds-ui-04,#8d8d8d);
+      transition: background-color 70ms cubic-bezier(.2,0,.38,.9),outline 70ms cubic-bezier(.2,0,.38,.9);
+    }
+  
+    input {
+      height: 2.5rem;
+    }
+  
+    textarea {
+      min-width: 10rem;
+      min-height: 2.5rem;
+      padding: .6875rem 1rem;
+      color: var(--cds-text-01,#161616);
+      order: 3;
+      resize: vertical;
+    }
+  
+    .__input__notification {
+      font-size: 0.825rem;
+      max-height: 12.5rem;
+      display: block;
+      color: #da1e28;
+      font-weight: 400;
+      overflow: visible;
+      font-weight: 400;
+      line-height: 1.5;
+      margin: .25rem 0 1rem 0;
+    }
+  
+    &.__invalid__text {
+      input {
+        outline: 2px solid #da1e28;
+        outline-offset: -2px;
+      }
+    }
+  }
+  
+  

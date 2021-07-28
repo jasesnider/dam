@@ -1,12 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { assets } from './assetsList';
-
-type ImageDetails = {
-    id: string,
-    name: string,
-    url: string,
-    size: number
-};
+import ImageDetails from '../../interfaces/ImageDetails';
 
 export default function handler(
   req: NextApiRequest,

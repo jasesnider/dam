@@ -2,17 +2,13 @@ import React, { useState, useEffect} from 'react';
 import Head from 'next/head';
 import { Nav, Input } from '../components';
 import { Assets, UploadButton } from '../containers';
+import ImageDetails from '../interfaces/ImageDetails';
+import classNames from 'classnames';
 import styles from '../styles/Home.module.scss';
-
-interface ImageDetails {
-  id: string,
-  name: string,
-  url: string,
-  size: number
-}
+import { assetsApiPath } from '../constants/api';
 
 function getAssets() {
-  return fetch('http://localhost:3000/api/assets')
+  return fetch(assetsApiPath)
     .then(data => data.json())
 }
 
@@ -43,7 +39,7 @@ export default function Home() {
     //     },
     //     body: JSON.stringify({ name: 'Image 7', url: 'Image 7', size: 7000}),
     //   });
-  setAssets([...assets, { id: '7', name: 'Image 7', url: 'Image 7', size: 7000}]);
+  // setAssets([...assets, { id: '7', name: 'Image 7', url: 'Image 7', size: 7000}]);
     
   }
 
@@ -61,15 +57,15 @@ export default function Home() {
           Digital Asset Management System
         </h1>
         <Input
-          id="input__text__field"
+          id="search__text__field"
           label="Search Field"
           name="search__field"
           value={inputs["search__field"]}
           type="text"
           placeholder="Enter search criteria"
           onChange={handleInputChange}
-      />
-      <UploadButton onClick={uploadImage} />
+        />
+        <UploadButton onClick={uploadImage} />
         <Assets assets={assets} />      
       </main>
 
