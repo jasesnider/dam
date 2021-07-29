@@ -20,8 +20,9 @@ export default function Home() {
   
   const getAllAssets = () => {
     getAssets().then(a => {
+      const message = a.length ? '': 'No assets found. Try adding some! :)';
       setAssets(a);
-      setResponse('');
+      setResponse(message);
       setFilteredAssets(a);
      });
   }

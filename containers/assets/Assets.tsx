@@ -1,18 +1,18 @@
 import React from 'react';
 import { AssetCard } from '../../components';
-import ImageDetails from '../../interfaces/ImageDetails';
+import IImageDetails from '../../interfaces/IImageDetails';
 import styles from './Assets.module.scss';
 import { prodApiPath } from '../../constants/api';
 
 interface IProps {
-    assets: Array<ImageDetails>
+    assets: Array<IImageDetails>
 }
 
 const Assets: React.FC<IProps> = ({ assets }) => {
    
     return (
         <div className={styles.cardContainer}>
-            {assets.map((asset: ImageDetails) => {
+            {assets.map((asset: IImageDetails) => {
                 const {id, name, ext, url, formats } = asset;
                 const thumbnailUrl = `${prodApiPath}${formats.thumbnail.url}`;
                 const imageUrl = `${prodApiPath}${url}`;
