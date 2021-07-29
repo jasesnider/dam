@@ -1,12 +1,12 @@
-import Upload from './Upload';
+import Formats from './Formats';
 
 export default interface ImageDetails {
     id: string,
-    assetId: string,
     name: string,
-    description: string,
     published_at: string,
     created_at: string,
     updated_at: string,
-    upload: Upload
+    ext: string,
+    url: string,
+    formats: Formats
   }

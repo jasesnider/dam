@@ -15,7 +15,7 @@ interface IProps {
   name: string;
   invalidText?: string;
   className?: string;
-  placeholder: string;
+  placeholder?: string;
   onChange: (
     event:
       | React.ChangeEvent<HTMLInputElement>

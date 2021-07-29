@@ -1,11 +1,12 @@
 .card {
-    width: 33%;
     min-height: 25rem;
     border-radius: 1px;
 
     box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
     -webkit-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
     -moz-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
+
+
 
     .image {
         width: 100%;
@@ -15,19 +16,14 @@
     .content {
         display: flex;
         flex-direction: column;
-        background-color: white;
+        justify-content: space-between;
         padding: 1rem;
-        height: auto;
+        height: 40%;
 
         h2.name {
             font-size: 1.1rem;
         }
-    
-        .description {
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-        }
-    
+
         .extension {
             background-color: purple;
             color: white;
@@ -35,7 +31,9 @@
             font-size: 0.675rem;
             text-transform: uppercase;
             padding: 0.25rem 0.5rem;
+            width: 3rem;
+            text-align: center;
+            align-self: flex-end;
         }
     }
 }
-

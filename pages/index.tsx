@@ -1,16 +1,21 @@
 import React, { useState, useEffect} from 'react';
 import Head from 'next/head';
-import { Nav, Input } from '../components';
-import { Assets, UploadButton } from '../containers';
+import { Nav, Input, Button} from '../components';
+import { Assets } from '../containers';
 import ImageDetails from '../interfaces/ImageDetails';
 import styles from '../styles/Home.module.scss';
-import {getAssets} from '../api/assets';
+import {getAssets, uploadAsset} from '../api/assets';
+import InputNotification from '../components/inputs/InputNotification';
+import { validateImageType } from '../utils/validations';
 
 export default function Home() {
 
   const [inputs, setText] = useState<any>({});
+  const [showForm, setFormStatus] = useState<boolean>(false);
   const [assets, setAssets] = useState<ImageDetails[]>([]);
   const [filteredAssets, setFilteredAssets] = useState<ImageDetails[]>([]);
+  const [fileUpload, setFileUpload] = useState<any>();
+  const [invalidText, setInvalidText] = useState<string>('');
 
   useEffect(() => {
      getAssets().then(a => {
@@ -22,9 +27,7 @@ export default function Home() {
   useEffect(() => {
     if(!!inputs && !!inputs?.search__field) {
       const foundAssets = assets?.filter((asset: ImageDetails) => {
-      const {name, description} = asset;
-      const joinedSearchCriteria = `${name}${description}`;
-        return joinedSearchCriteria.toLowerCase().includes(inputs?.search__field?.toLowerCase());
+        return asset?.name?.toLowerCase().includes(inputs?.search__field?.toLowerCase());
       });
       setFilteredAssets(foundAssets);
     } else {
@@ -43,15 +46,28 @@ export default function Home() {
     setText((inputs: Object) => ({ ...inputs, [name]: value }));
   };
 
-  const uploadImage = () =>  {
-    // fetch('/api/asset/7', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({ name: 'Image 7', url: 'Image 7', size: 7000}),
-    //   });
-  // setAssets([...assets, { id: '7', name: 'Image 7', url: 'Image 7', size: 7000}]);
+  const toggleForm = () => setFormStatus(!showForm);
+  const fileUploadChange = (e: any) => setFileUpload(e?.currentTarget?.files[0]);
+  const submitFileUpload = (e: React.FormEvent<HTMLInputElement>): void  => {
+    e.preventDefault();
+
+    if(fileUpload) {
+      const isValidImageType = validateImageType(fileUpload?.type);
+
+      uploadAsset(fileUpload);
+
+      if(isValidImageType) {
+        console.log('file: ', fileUpload);
+      } else {
+        setInvalidText('Not a valid image type. Please try again.');
+      }
+
+    
+    } else {
+      setInvalidText('Missing file to upload. Please try again.');    
+    }
+
+
     
   }
 
@@ -77,7 +93,23 @@ export default function Home() {
             hideLabel={true}
             onChange={handleInputChange}
           />
-          <UploadButton onClick={uploadImage} />
+          <div className="upload-container">
+            <Button
+              id="toggle-form-button"
+              name="simple"
+              type="primary"
+              title="Upload button"
+              label="Upload"
+              onClick={toggleForm}
+            />
+            <div className={styles.uploadFormContainer} data-show-form={showForm}>
+              <form>
+                {!!invalidText && <InputNotification message={invalidText} /> }
+                <input id="file-upload" className={styles.fileUpload} type="file" onChange={fileUploadChange}/>
+                <input id="submit-upload-button" className={styles.submitButton} onClick={submitFileUpload} type="submit" value="Submit" />
+              </form>
+            </div>
+          </div>
         </div>
         <Assets assets={filteredAssets} />      
       </main>

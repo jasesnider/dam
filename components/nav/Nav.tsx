@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import styles from './Nav.module.scss';
 
 const Nav: React.FC =() => {
@@ -8,20 +9,20 @@ const Nav: React.FC =() => {
         <nav id={styles.nav}>
             <ul>
                 <li>
-                    <a href="/">
+                    <Link href="/">
                         <h1 className={styles.title}>
-                            Digital Asset Management System
+                        <a>Digital Asset Management System</a>
                         </h1>
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a href="/assets">Assets</a>
+                    <Link href="/assets"><a>Assets</a></Link>
                 </li>
                 <li>
-                    <a href="/account">Account</a>
+                    <Link href="/account"><a>Account</a></Link>
                 </li>
                 <li>
-                    <a href="/help">Help</a>
+                    <Link href="/help"><a>Help</a></Link>
                 </li>
             </ul>
         </nav>

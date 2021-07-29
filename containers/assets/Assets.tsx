@@ -2,7 +2,7 @@ import React from 'react';
 import { AssetCard } from '../../components';
 import ImageDetails from '../../interfaces/ImageDetails';
 import styles from './Assets.module.scss';
-import { apiPath } from '../../constants/api';
+import { prodApiPath } from '../../constants/api';
 
 interface IProps {
     assets: Array<ImageDetails>
@@ -13,18 +13,16 @@ const Assets: React.FC<IProps> = ({ assets }) => {
     return (
         <div className={styles.cardContainer}>
             {assets.map((asset: ImageDetails) => {
-                const {assetId, name, description, upload } = asset;
-                const thumbnailUrl = `${apiPath}${upload.formats.thumbnail.url}`;
-                const imageUrl = `${apiPath}${upload.url}`;
-
+                const {id, name, ext, url, formats } = asset;
+                const thumbnailUrl = `${prodApiPath}${formats.thumbnail.url}`;
+                const imageUrl = `${prodApiPath}${url}`;
                 return (
                    <AssetCard
-                        key={assetId}
+                        key={id}
                         name={name}
-                        description={description}
                         url={imageUrl}
                         thumbnailUrl={thumbnailUrl}
-                        ext={upload.ext}
+                        ext={ext}
                    />
                 )  
             })
