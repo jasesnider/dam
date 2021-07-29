@@ -1,6 +1,6 @@
-import Formats from './Formats';
+import IFormats from './IFormats';
 
-export default interface ImageDetails {
+export default interface IImageDetails {
     id: string,
     name: string,
     published_at: string,
@@ -8,5 +8,5 @@ export default interface ImageDetails {
     updated_at: string,
     ext: string,
     url: string,
-    formats: Formats
+    formats: IFormats
   }

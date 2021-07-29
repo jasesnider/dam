@@ -8,6 +8,7 @@
 .subnav {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 2rem;
 }
 
 .main {
@@ -89,6 +90,16 @@ input.fileUpload {
   min-height: 2.5rem;
   text-align: left;
   cursor: pointer;
+
+  background-color: #0f62fe;
+
+  &:hover {
+    background-color: #0353e9;
+  }
+
+  &:active {
+    background-color: #002d9c;
+  }
 }
 
 .submitButton {
@@ -97,14 +108,23 @@ input.fileUpload {
   background-color: #0f62fe;
 }
 
-.notifications {
+@mixin notifications($margin, $backgroundColour, $colour, $borderColour, $height) {
   display: flex;
   width: 100%;
-  margin: 2rem 0;
-  background-color: yellowgreen;
-  color: white;
-  border: 1px solid green;
-  height: 4rem;
+  margin: $margin;
+  background-color: $backgroundColour;
+  color: $colour;
+  border: 1px solid $borderColour;
+  border-radius: 0.25rem;
+  height: $height;
   justify-content: center;
   align-items: center;
+}
+
+.notifications {
+  @include notifications(2rem 0, yellowgreen, white, green, 4rem);
+}
+
+.validationNotification {
+  @include notifications(1rem 0, pink, darkred, darkred, 2rem);
 }

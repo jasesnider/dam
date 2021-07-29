@@ -1,4 +1,4 @@
-export default interface Formats {
+export default interface IFormats {
     thumbnail: {
     width: number,
     height: number,

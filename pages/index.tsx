@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import Head from 'next/head';
 import { Nav, Input, Button} from '../components';
 import { Assets } from '../containers';
-import ImageDetails from '../interfaces/ImageDetails';
+import IImageDetails from '../interfaces/IImageDetails';
 import styles from '../styles/Home.module.scss';
 import {getAssets, uploadAsset} from '../api/assets';
 import InputNotification from '../components/inputs/InputNotification';
@@ -12,26 +12,28 @@ export default function Home() {
 
   const [inputs, setText] = useState<any>({});
   const [showForm, setFormStatus] = useState<boolean>(false);
-  const [assets, setAssets] = useState<ImageDetails[]>([]);
-  const [filteredAssets, setFilteredAssets] = useState<ImageDetails[]>([]);
-  const [fileUpload, setFileUpload] = useState<any>();
+  const [assets, setAssets] = useState<IImageDetails[]>([]);
+  const [filteredAssets, setFilteredAssets] = useState<IImageDetails[]>([]);
+  const [fileUpload, setFileUpload] = useState<File>();
   const [invalidText, setInvalidText] = useState<string>('');
-  const [apiResponse, setResponse] = useState<string>(''); 
+  const [apiResponse, setResponse] = useState<string>('');
   
   const getAllAssets = () => {
     getAssets().then(a => {
       setAssets(a);
+      setResponse('');
       setFilteredAssets(a);
      });
   }
 
   useEffect(() => {
+    setResponse('Loading');
     getAllAssets();
   }, []);
 
   useEffect(() => {
     if(!!inputs && !!inputs?.search__field) {
-      const foundAssets = assets?.filter((asset: ImageDetails) => {
+      const foundAssets = assets?.filter((asset: IImageDetails) => {
         return asset?.name?.toLowerCase().includes(inputs?.search__field?.toLowerCase());
       });
       setFilteredAssets(foundAssets);
@@ -57,12 +59,17 @@ export default function Home() {
     setText((inputs: Object) => ({ ...inputs, [name]: value }));
   };
 
-  const toggleForm = () => setFormStatus(!showForm);
+  const toggleForm = () => {
+    setFormStatus(!showForm);
+    setFileUpload(undefined);
+
+  };
   const fileUploadChange = (e: any) => setFileUpload(e?.currentTarget?.files[0]);
   const submitFileUpload = (e: React.FormEvent<HTMLInputElement>): void  => {
     e.preventDefault();
 
     if(fileUpload) {
+      // setInvalidText('');
       const isValidImageType = validateImageType(fileUpload?.type);
 
       if(isValidImageType) {
@@ -111,7 +118,7 @@ export default function Home() {
             />
             <div className={styles.uploadFormContainer} data-show-form={showForm}>
               <form>
-                {!!invalidText && <InputNotification message={invalidText} /> }
+                {!!invalidText && <InputNotification className={styles.validationNotification} message={invalidText} /> }
                 <input id="file-upload" className={styles.fileUpload} type="file" onChange={fileUploadChange}/>
                 <input id="submit-upload-button" className={styles.submitButton} onClick={submitFileUpload} type="submit" value="Submit" />
               </form>
