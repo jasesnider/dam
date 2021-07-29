@@ -74,9 +74,18 @@
   text-align: center;
 }
 
-.description {
-  line-height: 1.5;
+.assetCount {
+  display: flex;
   font-size: 1.5rem;
+  margin-right: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 600px){
+  .assetCount {
+    font-size: 1rem;
+  }
 }
 
 .submitButton,

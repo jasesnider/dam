@@ -97,6 +97,7 @@ export default function Home() {
       <main className={styles.main}>
         <Nav />
         <div className={styles.subnav}>
+          <div className={styles.assetCount}>{`${assets?.length} Asset${assets.length > 1 ? 's': ''}`}</div>
           <Input
             id="search__text__field"
             className="search-field"
@@ -104,7 +105,7 @@ export default function Home() {
             name="search__field"
             value={inputs["search__field"]}
             type="text"
-            placeholder="Enter search criteria"
+            placeholder="Search images... "
             hideLabel={true}
             onChange={handleInputChange}
           />
