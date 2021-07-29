@@ -20,3 +20,10 @@
 
  @include mediaQueries(2, 960px);
  @include mediaQueries(1, 600px);
+
+ 
+.assetCount {
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+}

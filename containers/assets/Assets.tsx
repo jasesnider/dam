@@ -9,25 +9,29 @@ interface IProps {
 }
 
 const Assets: React.FC<IProps> = ({ assets }) => {
-   
     return (
-        <div className={styles.cardContainer}>
-            {assets.map((asset: IImageDetails) => {
-                const {id, name, ext, url, formats } = asset;
-                const thumbnailUrl = `${prodApiPath}${formats.thumbnail.url}`;
-                const imageUrl = `${prodApiPath}${url}`;
-                return (
-                   <AssetCard
-                        key={id}
-                        name={name}
-                        url={imageUrl}
-                        thumbnailUrl={thumbnailUrl}
-                        ext={ext}
-                   />
-                )  
-            })
-        }
-        </div>
+        <>
+            <div className={styles.assetCount}>{`${assets?.length} Asset${assets.length > 1 ? 's': ''}`}</div>
+            <div className={styles.cardContainer}>
+            
+        
+                {assets.map((asset: IImageDetails) => {
+                    const {id, name, ext, url, formats } = asset;
+                    const thumbnailUrl = `${prodApiPath}${formats.thumbnail.url}`;
+                    const imageUrl = `${prodApiPath}${url}`;
+                    return (
+                    <AssetCard
+                            key={id}
+                            name={name}
+                            url={imageUrl}
+                            thumbnailUrl={thumbnailUrl}
+                            ext={ext}
+                    />
+                    )  
+                })
+            }
+            </div>
+        </>
     )
 }
 
