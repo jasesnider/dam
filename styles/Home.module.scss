@@ -96,3 +96,15 @@ input.fileUpload {
   color: white;
   background-color: #0f62fe;
 }
+
+.notifications {
+  display: flex;
+  width: 100%;
+  margin: 2rem 0;
+  background-color: yellowgreen;
+  color: white;
+  border: 1px solid green;
+  height: 4rem;
+  justify-content: center;
+  align-items: center;
+}

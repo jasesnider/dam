@@ -16,12 +16,17 @@ export default function Home() {
   const [filteredAssets, setFilteredAssets] = useState<ImageDetails[]>([]);
   const [fileUpload, setFileUpload] = useState<any>();
   const [invalidText, setInvalidText] = useState<string>('');
-
-  useEffect(() => {
-     getAssets().then(a => {
+  const [apiResponse, setResponse] = useState<string>(''); 
+  
+  const getAllAssets = () => {
+    getAssets().then(a => {
       setAssets(a);
       setFilteredAssets(a);
      });
+  }
+
+  useEffect(() => {
+    getAllAssets();
   }, []);
 
   useEffect(() => {
@@ -35,6 +40,12 @@ export default function Home() {
     }
    
   }, [inputs]);
+
+  useEffect(() => {
+    if(apiResponse) {
+      setTimeout(function(){ setResponse(''); }, 3000);
+    }
+  },[apiResponse]);
 
   const handleInputChange = (
     event:
@@ -54,21 +65,17 @@ export default function Home() {
     if(fileUpload) {
       const isValidImageType = validateImageType(fileUpload?.type);
 
-      uploadAsset(fileUpload);
-
       if(isValidImageType) {
+        uploadAsset(fileUpload, setResponse, getAllAssets);
+        toggleForm();
         console.log('file: ', fileUpload);
       } else {
         setInvalidText('Not a valid image type. Please try again.');
       }
-
     
     } else {
       setInvalidText('Missing file to upload. Please try again.');    
-    }
-
-
-    
+    } 
   }
 
   return (
@@ -111,6 +118,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {apiResponse && <div className={styles.notifications}>{apiResponse}</div>}
         <Assets assets={filteredAssets} />      
       </main>
 

@@ -1,26 +1,22 @@
-import { assetsApiPath, prodAssetsApiPath } from '../constants/api';
+import { prodAssetsApiPath } from '../constants/api';
+import axios from 'axios';
 
-export async function getAssets() {
-    const assets = await fetch(prodAssetsApiPath)
-      .then(data => data.json());
+export const getAssets = async () => await axios.get(prodAssetsApiPath).then(res => res.data);
 
-      console.log(assets);
-
-      return assets;
-}
-
-export const uploadAsset = async (data) => {
-  const formData = new FormData();
-  formData.append('files', data);
-  console.log(formData)
-  fetch(prodAssetsApiPath, {
-    method: 'POST',
-    body: formData,
-  }).then((response) => {
-    const result = response.json()
-    console.log("result", result)
-  }).catch(function (err) {
-    console.log("error:");
-    console.log(err)
-  });
-}
+export const uploadAsset = async (data, setResponse, refreshAssets) => {
+  let formData = new FormData();
+  formData.append("files", data);
+  axios({
+    method: "post",
+    url: "https://dam-api-vo8le.ondigitalocean.app/upload",
+    data: formData
+  })
+    .then(() => {
+      setResponse('Succesfully uploaded');
+      refreshAssets();
+      // console.log("Succesfully uploaded: ", JSON.stringify(data));
+    })
+    .catch((error) => {
+      console.log("Error: ", error.message);
+    });
+};
