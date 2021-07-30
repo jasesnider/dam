@@ -25,7 +25,7 @@ return (
         <div className={styles.image} style={style}></div>
         <div className={styles.content}>
             <h2 className={styles.name}><a href={url} target="_blank" rel="noreferrer">{name}</a></h2>
-            <span className={styles.extension}>
+            <span className={styles.extension} data-ext={formattedExt}>
                 {formattedExt}
             </span>
         </div>

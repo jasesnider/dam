@@ -67,7 +67,7 @@ export default function Home() {
     setFileUpload(undefined);
 
   };
-  
+
   const fileUploadChange = (e: any) => setFileUpload(e?.currentTarget?.files[0]);
   const submitFileUpload = (e: React.FormEvent<HTMLInputElement>): void  => {
     e.preventDefault();
