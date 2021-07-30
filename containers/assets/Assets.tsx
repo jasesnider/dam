@@ -14,10 +14,11 @@ const Assets: React.FC<IProps> = ({ assets }) => {
             <div className={styles.assetCount}>{`${assets?.length} Asset${assets.length > 1 ? 's': ''}`}</div>
             <div className={styles.cardContainer}>
             
-        
                 {assets.map((asset: IImageDetails) => {
                     const {id, name, ext, url, formats } = asset;
-                    const thumbnailUrl = `${prodApiPath}${formats.thumbnail.url}`;
+
+                    const thumbnail = formats?.thumbnail?.url || url;
+                    const thumbnailUrl = `${prodApiPath}${thumbnail}`;
                     const imageUrl = `${prodApiPath}${url}`;
                     return (
                     <AssetCard

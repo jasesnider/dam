@@ -10,12 +10,9 @@ interface IProps {
   }
 
 const AssetCard: React.FC<IProps> = ({ name, thumbnailUrl, url, ext }) => {
-
     const style = {
+       
         backgroundImage: `url(${thumbnailUrl})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat'
     }
 
     const formattedExt = fileExtensionFormatter(ext);

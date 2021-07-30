@@ -78,7 +78,6 @@ export default function Home() {
       if(isValidImageType) {
         uploadAsset(fileUpload, setResponse, getAllAssets);
         toggleForm();
-        console.log('file: ', fileUpload);
       } else {
         setInvalidText(invalidImageType);
       }
