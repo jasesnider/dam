@@ -7,6 +7,8 @@ import styles from '../styles/Home.module.scss';
 import {getAssets, uploadAsset} from '../api/assets';
 import InputNotification from '../components/inputs/InputNotification';
 import { validateImageType } from '../utils/validations';
+import { getYear } from '../utils/formatters';
+import { invalidImageType, missingFile, noAssetsFound, emptyString, loading } from '../constants/content';
 
 export default function Home() {
 
@@ -20,7 +22,7 @@ export default function Home() {
   
   const getAllAssets = () => {
     getAssets().then(a => {
-      const message = a.length ? '': 'No assets found. Try adding some! :)';
+      const message = a.length ? emptyString: noAssetsFound;
       setAssets(a);
       setResponse(message);
       setFilteredAssets(a);
@@ -28,7 +30,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setResponse('Loading');
+    setResponse(loading);
     getAllAssets();
   }, []);
 
@@ -46,7 +48,7 @@ export default function Home() {
 
   useEffect(() => {
     if(apiResponse) {
-      setTimeout(function(){ setResponse(''); }, 3000);
+      setTimeout(function(){ setResponse(emptyString); }, 3000);
     }
   },[apiResponse]);
 
@@ -65,12 +67,12 @@ export default function Home() {
     setFileUpload(undefined);
 
   };
+  
   const fileUploadChange = (e: any) => setFileUpload(e?.currentTarget?.files[0]);
   const submitFileUpload = (e: React.FormEvent<HTMLInputElement>): void  => {
     e.preventDefault();
 
     if(fileUpload) {
-      // setInvalidText('');
       const isValidImageType = validateImageType(fileUpload?.type);
 
       if(isValidImageType) {
@@ -78,11 +80,11 @@ export default function Home() {
         toggleForm();
         console.log('file: ', fileUpload);
       } else {
-        setInvalidText('Not a valid image type. Please try again.');
+        setInvalidText(invalidImageType);
       }
     
     } else {
-      setInvalidText('Missing file to upload. Please try again.');    
+      setInvalidText(missingFile);    
     } 
   }
 
@@ -108,7 +110,7 @@ export default function Home() {
             hideLabel={true}
             onChange={handleInputChange}
           />
-          <div className="upload-container">
+          <div className="upload-wrapper">
             <Button
               id="toggle-form-button"
               name="simple"
@@ -118,7 +120,7 @@ export default function Home() {
               onClick={toggleForm}
             />
             <div className={styles.uploadFormContainer} data-show-form={showForm}>
-              <form>
+              <form className={styles.uploadForm}>
                 {!!invalidText && <InputNotification className={styles.validationNotification} message={invalidText} /> }
                 <input id="file-upload" className={styles.fileUpload} type="file" onChange={fileUploadChange}/>
                 <input id="submit-upload-button" className={styles.submitButton} onClick={submitFileUpload} type="submit" value="Submit" />
@@ -132,7 +134,7 @@ export default function Home() {
 
       <footer className={styles.footer}>
         
-          2021 Digital Asset Management System. All Rights Reserved.
+          {getYear()} Digital Asset Management System. All Rights Reserved.
       
       </footer>
     </div>

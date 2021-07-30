@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  padding: 0 4rem;
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -26,22 +26,32 @@
 }
 
 .uploadFormContainer {
-  padding: 2rem;
-  max-width: 28rem;
-  background-color: white;
-  position: absolute;
-  right: 4rem;
-
-  box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
-  -webkit-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
-  -moz-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
-
   &[data-show-form=false] {
     display: none;
   }
 
   &[data-show-form=true] {
     display: flex;
+  }
+}
+
+.uploadForm {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  max-width: 28rem;
+  background-color: white;
+  position: absolute;
+  right: 1rem;
+
+  box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
+  -webkit-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
+  -moz-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.25);
+}
+
+@media screen and (max-width: 600px) {
+  .uploadFormContainer {
+    max-width: 20.5rem;
   }
 }
 
@@ -95,6 +105,10 @@ input.fileUpload {
   &:active {
     background-color: #002d9c;
   }
+}
+
+input.fileUpload {
+  max-width: 18rem;
 }
 
 .submitButton {
