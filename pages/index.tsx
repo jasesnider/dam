@@ -29,6 +29,11 @@ export default function Home() {
      });
   }
 
+  const clearForm = () => {
+    setText({...inputs, file__name__field: emptyString, caption__field: emptyString});
+    setFileUpload(undefined);
+  }
+
   useEffect(() => {
     setResponse(loading);
     getAllAssets();
@@ -82,7 +87,8 @@ export default function Home() {
           caption__field, 
           // image__alt__text__field, 
           fileUpload, 
-          setResponse, 
+          setResponse,
+          clearForm,
           getAllAssets
         );
         toggleForm();

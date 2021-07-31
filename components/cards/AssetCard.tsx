@@ -14,10 +14,8 @@ const AssetCard: React.FC<IProps> = ({ name, imageUrl, description, thumbnailUrl
     const style = {
         backgroundImage: `url(${thumbnailUrl})`,
     }
-
-    const { url, ext } = upload;
-
-    const formattedExt = fileExtensionFormatter(ext);
+    
+    const formattedExt = fileExtensionFormatter(upload.ext);
 
 return (
     <div className={styles.card}>

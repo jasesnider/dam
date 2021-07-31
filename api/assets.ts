@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { prodApiPath, prodAssetsApiPath } from '../constants/api';
+import { prodAssetsApiPath } from '../constants/api';
 import { successfulUploadMessage } from '../constants/content';
 
 export const getAssets = async () => await axios.get(prodAssetsApiPath).then(res => res.data);
@@ -11,6 +11,7 @@ export const uploadAsset = async (
     // alternativeText: string,
     file: File, 
     setResponse: Function, 
+    clearForm: Function,
     refreshAssets: Function
   ) => {
 
@@ -27,11 +28,12 @@ export const uploadAsset = async (
 
   axios({
     method: "post",
-    url: `${prodApiPath}/assets`, 
+    url: `${prodAssetsApiPath}`, 
     data: formData
   })
     .then(() => {
       setResponse(successfulUploadMessage);
+      clearForm();
       refreshAssets();
     })
     .catch((error) => {
