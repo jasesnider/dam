@@ -18,18 +18,19 @@ const Assets: React.FC<IProps> = ({ assets }) => {
             <div className={styles.cardContainer}>
             
                 {assets.map((asset: IImageDetails) => {
-                    const {id, name, ext, url, formats } = asset;
+                    const {id, name, description, upload } = asset;
 
-                    const thumbnail = formats?.thumbnail?.url || url;
+                    const thumbnail = upload?.formats?.thumbnail?.url || upload?.url;
                     const thumbnailUrl = `${prodApiPath}${thumbnail}`;
-                    const imageUrl = `${prodApiPath}${url}`;
+                    const imageUrl = `${prodApiPath}${upload?.url}`;
                     return (
                     <AssetCard
-                            key={id}
-                            name={name}
-                            url={imageUrl}
-                            thumbnailUrl={thumbnailUrl}
-                            ext={ext}
+                        key={id}
+                        name={name}
+                        description={description}
+                        imageUrl={imageUrl}
+                        thumbnailUrl={thumbnailUrl}
+                        upload={upload}
                     />
                     )  
                 })

@@ -21,6 +21,7 @@ interface IProps {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
+  required?: boolean;
   disabled?: boolean;
   readonly?: boolean;
   hideLabel?: boolean;
@@ -43,7 +44,8 @@ const Input: React.FC<IProps> = ({
   placeholder,
   onChange,
   disabled,
-  hideLabel
+  hideLabel,
+  required
 }) => {
   const context = "__input";
   const classNames = classnames(
@@ -71,6 +73,7 @@ const Input: React.FC<IProps> = ({
           onChange={onChange}
           readOnly={readonly}
           disabled={disabled}
+          required={required}
           aria-invalid={!!invalidText}
         />
       ) : (
@@ -86,6 +89,7 @@ const Input: React.FC<IProps> = ({
           onChange={onChange}
           readOnly={readonly}
           disabled={disabled}
+          required={required}
           aria-invalid={!!invalidText}
         />
       )}

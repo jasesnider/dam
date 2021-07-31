@@ -4,16 +4,18 @@ import { fileExtensionFormatter } from '../../utils/formatters';
 
 interface IProps {
     name: string;
+    description: string;
+    imageUrl: string;
     thumbnailUrl: string;
-    url: string
-    ext: string
+    upload: any
   }
 
-const AssetCard: React.FC<IProps> = ({ name, thumbnailUrl, url, ext }) => {
+const AssetCard: React.FC<IProps> = ({ name, imageUrl, description, thumbnailUrl, upload }) => {
     const style = {
-       
         backgroundImage: `url(${thumbnailUrl})`,
     }
+
+    const { url, ext } = upload;
 
     const formattedExt = fileExtensionFormatter(ext);
 
@@ -21,7 +23,10 @@ return (
     <div className={styles.card}>
         <div className={styles.image} style={style}></div>
         <div className={styles.content}>
-            <h2 className={styles.name}><a href={url} target="_blank" rel="noreferrer">{name}</a></h2>
+            <h2 className={styles.name}>
+                <a href={imageUrl} target="_blank" rel="noreferrer">{name}</a>
+            </h2>
+            <div className={styles.description}>{description}</div>
             <span className={styles.extension} data-ext={formattedExt}>
                 {formattedExt}
             </span>

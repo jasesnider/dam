@@ -37,7 +37,8 @@ export default function Home() {
   useEffect(() => {
     if(!!inputs && !!inputs?.search__field) {
       const foundAssets = assets?.filter((asset: IImageDetails) => {
-        return asset?.name?.toLowerCase().includes(inputs?.search__field?.toLowerCase());
+        const joinedSearchCriteria = `${asset.name}${asset.description}`;
+        return joinedSearchCriteria.toLowerCase().includes(inputs?.search__field?.toLowerCase());
       });
       setFilteredAssets(foundAssets);
     } else {
@@ -65,7 +66,6 @@ export default function Home() {
   const toggleForm = () => {
     setFormStatus(!showForm);
     setFileUpload(undefined);
-
   };
 
   const fileUploadChange = (e: any) => setFileUpload(e?.currentTarget?.files[0]);
@@ -73,10 +73,18 @@ export default function Home() {
     e.preventDefault();
 
     if(fileUpload) {
+      const {file__name__field, caption__field, image__alt__text__field} = inputs;
       const isValidImageType = validateImageType(fileUpload?.type);
 
       if(isValidImageType) {
-        uploadAsset(fileUpload, setResponse, getAllAssets);
+        uploadAsset(
+          file__name__field, 
+          caption__field, 
+          // image__alt__text__field, 
+          fileUpload, 
+          setResponse, 
+          getAllAssets
+        );
         toggleForm();
       } else {
         setInvalidText(invalidImageType);
@@ -121,6 +129,37 @@ export default function Home() {
             <div className={styles.uploadFormContainer} data-show-form={showForm}>
               <form className={styles.uploadForm}>
                 {!!invalidText && <InputNotification className={styles.validationNotification} message={invalidText} /> }
+                <Input
+                  id="file__name__text__field"
+                  className="file-name-field"
+                  label="File Name"
+                  name="file__name__field"
+                  value={inputs["file__name__field"]}
+                  type="text"
+                  placeholder="Enter file name... "
+                  onChange={handleInputChange}
+                />
+                <Input
+                  id="caption__text__field"
+                  className="caption-field"
+                  label="Caption"
+                  name="caption__field"
+                  value={inputs["caption__field"]}
+                  type="textarea"
+                  placeholder="Enter caption... "
+                  onChange={handleInputChange}
+                />
+                 {/* <Input
+                  id="image__alt__text__field"
+                  className="image-alt-text-field"
+                  label="Image Alt Text"
+                  name="image__alt__text__field"
+                  value={inputs["image__alt__text__field"]}
+                  type="text"
+                  required
+                  placeholder="Enter alt text... "
+                  onChange={handleInputChange}
+                /> */}
                 <input id="file-upload" className={styles.fileUpload} type="file" onChange={fileUploadChange}/>
                 <input id="submit-upload-button" className={styles.submitButton} onClick={submitFileUpload} type="submit" value="Submit" />
               </form>
