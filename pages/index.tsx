@@ -1,14 +1,13 @@
 import React, { useState, useEffect} from 'react';
 import Head from 'next/head';
-import { Nav, Input, Button} from '../components';
+import { Nav, Input, Button } from '../components';
 import { Assets } from '../containers';
 import IImageDetails from '../interfaces/IImageDetails';
 import styles from '../styles/Home.module.scss';
-import {getAssets, uploadAsset} from '../api/assets';
-import InputNotification from '../components/inputs/InputNotification';
-import { validateImageType } from '../utils/validations';
+import { getAssets } from '../api/assets';
 import { getYear } from '../utils/formatters';
-import { invalidImageType, missingFile, noAssetsFound, emptyString, loading } from '../constants/content';
+import { noAssetsFound, emptyString, loading } from '../constants/content';
+import UploadForm from '../forms/upload';
 
 export default function Home() {
 
@@ -16,8 +15,6 @@ export default function Home() {
   const [showForm, setFormStatus] = useState<boolean>(false);
   const [assets, setAssets] = useState<IImageDetails[]>([]);
   const [filteredAssets, setFilteredAssets] = useState<IImageDetails[]>([]);
-  const [fileUpload, setFileUpload] = useState<File>();
-  const [invalidText, setInvalidText] = useState<string>('');
   const [apiResponse, setResponse] = useState<string>('');
   
   const getAllAssets = () => {
@@ -29,10 +26,15 @@ export default function Home() {
      });
   }
 
-  const clearForm = () => {
-    setText({...inputs, file__name__field: emptyString, caption__field: emptyString});
-    setFileUpload(undefined);
-  }
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
+    event.persist();
+    const { name, value } = event.currentTarget;
+    setText((inputs: Object) => ({ ...inputs, [name]: value }));
+};
 
   useEffect(() => {
     setResponse(loading);
@@ -58,48 +60,9 @@ export default function Home() {
     }
   },[apiResponse]);
 
-  const handleInputChange = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    event.persist();
-    const { name, value } = event.currentTarget;
-    setText((inputs: Object) => ({ ...inputs, [name]: value }));
-  };
-
   const toggleForm = () => {
     setFormStatus(!showForm);
-    setFileUpload(undefined);
   };
-
-  const fileUploadChange = (e: any) => setFileUpload(e?.currentTarget?.files[0]);
-  const submitFileUpload = (e: React.FormEvent<HTMLInputElement>): void  => {
-    e.preventDefault();
-
-    if(fileUpload) {
-      const {file__name__field, caption__field, image__alt__text__field} = inputs;
-      const isValidImageType = validateImageType(fileUpload?.type);
-
-      if(isValidImageType) {
-        uploadAsset(
-          file__name__field, 
-          caption__field, 
-          // image__alt__text__field, 
-          fileUpload, 
-          setResponse,
-          clearForm,
-          getAllAssets
-        );
-        toggleForm();
-      } else {
-        setInvalidText(invalidImageType);
-      }
-    
-    } else {
-      setInvalidText(missingFile);    
-    } 
-  }
 
   return (
     <div className={styles.container}>
@@ -132,44 +95,7 @@ export default function Home() {
               label="Upload"
               onClick={toggleForm}
             />
-            <div className={styles.uploadFormContainer} data-show-form={showForm}>
-              <form className={styles.uploadForm}>
-                {!!invalidText && <InputNotification className={styles.validationNotification} message={invalidText} /> }
-                <Input
-                  id="file__name__text__field"
-                  className="file-name-field"
-                  label="File Name"
-                  name="file__name__field"
-                  value={inputs["file__name__field"]}
-                  type="text"
-                  placeholder="Enter file name... "
-                  onChange={handleInputChange}
-                />
-                <Input
-                  id="caption__text__field"
-                  className="caption-field"
-                  label="Caption"
-                  name="caption__field"
-                  value={inputs["caption__field"]}
-                  type="textarea"
-                  placeholder="Enter caption... "
-                  onChange={handleInputChange}
-                />
-                 {/* <Input
-                  id="image__alt__text__field"
-                  className="image-alt-text-field"
-                  label="Image Alt Text"
-                  name="image__alt__text__field"
-                  value={inputs["image__alt__text__field"]}
-                  type="text"
-                  required
-                  placeholder="Enter alt text... "
-                  onChange={handleInputChange}
-                /> */}
-                <input id="file-upload" className={styles.fileUpload} type="file" onChange={fileUploadChange}/>
-                <input id="submit-upload-button" className={styles.submitButton} onClick={submitFileUpload} type="submit" value="Submit" />
-              </form>
-            </div>
+       {showForm && <UploadForm inputs={inputs} handleInputChange={handleInputChange} setText={setText} setResponse={setResponse} toggleForm={toggleForm} getAllAssets={getAllAssets} />}
           </div>
         </div>
         {apiResponse && <div className={styles.notifications}>{apiResponse}</div>}
