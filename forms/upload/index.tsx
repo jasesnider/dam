@@ -20,12 +20,12 @@ const UploadForm: React.FC<IProps> = ({ inputs, setText, setResponse, getAllAsse
     const [invalidText, setInvalidText] = useState<string>('');
     const [fileUpload, setFileUpload] = useState<File>();
 
-    const clearForm = () => {
+    const clearForm = (): void => {
         setText({...inputs, file__name__field: emptyString, caption__field: emptyString});
         setFileUpload(undefined);
       }
 
-  const fileUploadChange = (e: any) => setFileUpload(e?.currentTarget?.files[0]);
+  const fileUploadChange = (e: any): void => setFileUpload(e?.currentTarget?.files[0]);
   const submitFileUpload = (e: React.FormEvent<HTMLInputElement>): void  => {
     e.preventDefault();
 

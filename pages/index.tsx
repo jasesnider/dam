@@ -17,7 +17,7 @@ export default function Home() {
   const [filteredAssets, setFilteredAssets] = useState<IImageDetails[]>([]);
   const [apiResponse, setResponse] = useState<string>('');
   
-  const getAllAssets = () => {
+  const getAllAssets = (): void => {
     getAssets().then(a => {
       const message = a.length ? emptyString: noAssetsFound;
       setAssets(a);
@@ -30,7 +30,7 @@ export default function Home() {
     event:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
-    ) => {
+    ): void => {
     event.persist();
     const { name, value } = event.currentTarget;
     setText((inputs: Object) => ({ ...inputs, [name]: value }));
@@ -60,7 +60,7 @@ export default function Home() {
     }
   },[apiResponse]);
 
-  const toggleForm = () => {
+  const toggleForm = (): void => {
     setFormStatus(!showForm);
   };
 
@@ -103,9 +103,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        
           {getYear()} Digital Asset Management System. All Rights Reserved.
-      
       </footer>
     </div>
   )
